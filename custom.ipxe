@@ -20,7 +20,7 @@ kernel ${base-url}/bzImage
 initrd ${base-url}/initrd.img
 initrd ${base-url}/m.img m.img
 initrd ${base-url}/fu.img fu.img
-imgargs edd=on vga=normal netsrc=wget neturl="http://pxe/programs/pmagic/pmodules/PMAGIC_2023_11_22.SQFS"
+imgargs bzImage initrd=img boot=live ip=dhcp edd=on vga=normal netsrc=wget neturl="http://pxe/programs/pmagic/pmodules/PMAGIC_2023_11_22.SQFS"
 echo "Files loaded, booting..."
 boot || goto custom_exit
 
