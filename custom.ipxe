@@ -16,9 +16,8 @@ goto custom_exit
 :option_one
 echo "Loading PartedMagic (RAM)..."
 set base-url http://pxe/programs/pmagic
-kernel ${base-url}/bzImage
+kernel ${base-url}/bzImage edd=on vga=normal netsrc=wget neturl="http://pxe/programs/pmagic/pmodules/PMAGIC_2023_11_22.SQFS"
 initrd ${base-url}/initrd.img
-initrd ${base-url}/pmodules/PMAGIC_2023_11_22.SQFS PMAGIC_2023_11_22.SQFS
 initrd ${base-url}/m.img m.img
 initrd ${base-url}/fu.img fu.img
 echo "Files loaded, booting..."
