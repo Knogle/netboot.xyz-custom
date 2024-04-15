@@ -1,12 +1,25 @@
 #!ipxe
 ###
-### netboot.xyz-custom menu
+### netboot.xyz-custom menu example
 ###
 
-:start
-echo Hello world!
-sleep 10
+:custom
+clear custom_choice
+menu This is a Test Menu
+item --gap This is the first sub menu
+item option_one ${space} Loading a kernel and initrd
+choose custom_choice || goto custom_exit
+echo ${cls}
+goto ${custom_choice}
 goto custom_exit
 
+:option_one
+kernel http://pxe/programs/pmagic/bzImage edd=on vga=normal netsrc=wget neturl="http://pxe/programs/pmagic/pmodules/PMAGIC_2023_11_22.SQFS"
+initrd http://pxe/programs/pmagic/initrd.img
+echo "Files loaded, booting..."
+imgargs vmlinuz put_kernel_img_args_here
+boot || goto custom_exit
+
 :custom_exit
-exit 0
+chain utils.ipxe
+exit
