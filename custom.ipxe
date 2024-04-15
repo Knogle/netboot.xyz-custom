@@ -15,11 +15,12 @@ goto custom_exit
 
 :option_one
 echo "Loading PartedMagic (RAM)..."
-initrd http://pxe/programs/pmagic/initrd.img
-initrd http://pxe/programs/pmagic/fu.img
-initrd http://pxe/programs/pmagic/m.img
-initrd http://pxe/programs/pmagic/pmodules/PMAGIC_2023_11_22.SQFS
-kernel http://pxe/programs/pmagic/vmlinuz edd=on vga=normal
+set base-url http://pxe/programs/pmagic
+kernel ${base-url}/bzImage
+initrd ${base-url}/initrd.img
+initrd ${base-url}/pmodules/PMAGIC_2023_11_22.SQFS PMAGIC_2023_11_22.SQFS
+initrd ${base-url}/m.img m.img
+initrd ${base-url}/fu.img fu.img
 echo "Files loaded, booting..."
 boot || goto custom_exit
 
