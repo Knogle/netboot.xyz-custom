@@ -16,10 +16,10 @@ goto custom_exit
 :option_one
 echo "Loading PartedMagic (RAM)..."
 set next-server http://pxe/programs/pmagic
-kernel http://${next-server}/tftp/pmagic/bzimage initrd=initrd.img initrd=fu.img initrd=m.img edd=on vga=normal netsrc=wget neturl="http://${next-server}/tftp//pmagic/pmodules/" netargs="-U pmagicboot"
-initrd http://${next-server}/tftp/pmagic/initrd.img
-initrd http://${next-server}/tftp/pmagic/fu.img
-initrd http://${next-server}/tftp/pmagic/m.img
+kernel http://${next-server}/pmagic/bzimage initrd=initrd.img initrd=fu.img initrd=m.img edd=on vga=normal netsrc=wget neturl="http://${next-server}/pmagic/pmodules/" netargs="-U pmagicboot"
+initrd http://${next-server}/pmagic/initrd.img
+initrd http://${next-server}/pmagic/fu.img
+initrd http://${next-server}/pmagic/m.img
 echo "Files loaded, booting..."
 boot || goto custom_exit
 
