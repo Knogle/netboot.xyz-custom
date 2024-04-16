@@ -22,6 +22,24 @@ initrd http://pxe/programs/pmagic/m.img
 echo "Files loaded, booting..."
 boot || goto custom_exit
 
+:option_two
+# Setzen Sie hier die IP-Adresse Ihres TFTP-Servers ein
+set tftp-server 192.168.200.64
+
+# Erkennen der Systemarchitektur
+cpuid --ext 29 && set arch x86_64 || set arch x86
+
+# Entscheidung, welche Boot-Datei geladen werden soll
+iseq ${arch} x86_64 && set boot-file bootx64.efi || set boot-file booti386.0
+
+# Anzeigen der gewählten Architektur und Boot-Datei
+echo Architektur: ${arch}
+echo Boot-Datei: ${boot-file}
+
+# Booten von der entsprechenden Datei über TFTP
+tftp ${tftp-server} ${boot-file}
+boot
+
 :custom_exit
 chain utils.ipxe
 exit
