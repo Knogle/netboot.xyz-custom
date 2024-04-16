@@ -30,7 +30,8 @@ echo Architektur: ${arch}
 echo Boot-Datei: ${boot-file}
 
 # Booten von der entsprechenden Datei über TFTP
-tftpboot ${tftp-server}${boot-file}
+chain tftp://${tftp-server}/${boot-file}
+
 
 :custom_exit
 chain utils.ipxe
