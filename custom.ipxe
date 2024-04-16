@@ -17,7 +17,7 @@ goto custom_exit
 
 :option_one
 # Setzen Sie hier die IP-Adresse Ihres TFTP-Servers ein
-set tftp-server 192.168.200.64
+set tftp-server pxe
 
 # Entscheidung, welche Boot-Datei geladen werden soll
 isset ${platform} && iseq ${platform} efi && set boot-file bootx64.efi || set boot-file booti386.0
