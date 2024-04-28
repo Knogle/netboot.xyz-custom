@@ -16,8 +16,8 @@ goto custom_exit
 
 
 :option_one
-# Setzen Sie hier die IP-Adresse Ihres TFTP-Servers ein
-set tftp-server pxe
+# Setzen Sie hier die IP-Adresse Ihres programs-Servers ein
+set programs-server pxe
 
 # Entscheidung, welche Boot-Datei geladen werden soll
 isset ${platform} && iseq ${platform} efi && set boot-file bootx64.efi || set boot-file booti386.0
@@ -27,8 +27,18 @@ isset ${platform} && iseq ${platform} efi && set boot-file bootx64.efi || set bo
 echo Architektur: ${arch}
 echo Boot-Datei: ${boot-file}
 
-# Booten von der entsprechenden Datei über TFTP
-chain tftp://${tftp-server}/${boot-file}
+# Booten von der entsprechenden Datei über programs
+chain programs://${programs-server}/${boot-file}
+
+:option_two
+
+
+kernel http://pxe/programs/pmagic-ipxe/bzimage initrd=initrd.img initrd=fu.img initrd=m.img initrd=files.cgz edd=on vga=normal
+initrd http://pxe/programs/pmagic-ipxe/initrd.img
+initrd http://pxe/programs/pmagic-ipxe/fu.img
+initrd http://pxe/programs/pmagic-ipxe/m.img
+initrd http://pxe/programs/pmagic-ipxe/files.cgz
+
 
 
 :custom_exit
