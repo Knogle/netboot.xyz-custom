@@ -8,7 +8,7 @@ clear custom_choice
 menu This is a Test Menu
 item --gap This is the first sub menu
 item option_one ${space} Loading a kernel and initrd
-item option_two ${space} Boot legacy PXE server
+item option_two ${space} Boot iPXE Parted Magic
 choose custom_choice || goto custom_exit
 echo ${cls}
 goto ${custom_choice}
@@ -33,7 +33,7 @@ chain programs://${programs-server}/${boot-file}
 :option_two
 
 
-kernel http://pxe/programs/pmagic-ipxe/bzimage initrd=initrd.img initrd=fu.img initrd=m.img initrd=files.cgz edd=on vga=normal
+kernel http://pxe/programs/pmagic-ipxe/bzImage initrd=initrd.img initrd=fu.img initrd=m.img initrd=files.cgz edd=on vga=normal
 initrd http://pxe/programs/pmagic-ipxe/initrd.img
 initrd http://pxe/programs/pmagic-ipxe/fu.img
 initrd http://pxe/programs/pmagic-ipxe/m.img
