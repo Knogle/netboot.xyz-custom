@@ -38,7 +38,7 @@ initrd http://pxe/programs/pmagic-ipxe/initrd.img
 initrd http://pxe/programs/pmagic-ipxe/fu.img
 initrd http://pxe/programs/pmagic-ipxe/m.img
 initrd http://pxe/programs/pmagic-ipxe/files.cgz
-
+boot
 
 
 :custom_exit
