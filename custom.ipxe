@@ -1,7 +1,21 @@
 #!ipxe
 
+# Überprüfen, ob das System im EFI-Modus gebootet wurde
+isefi && goto efi || goto bios
+
+:efi
+echo Booting in EFI mode
 # Setzen des neuen TFTP-Servers mit dem Hostnamen pxe
 set tftp-server pxe
+# Laden der Datei bootx64.efi vom neuen TFTP-Server
+chain tftp://${tftp-server}/bootx64.efi
+goto end
 
+:bios
+echo Booting in Legacy BIOS mode
+# Setzen des neuen TFTP-Servers mit dem Hostnamen pxe
+set tftp-server pxe
 # Laden der Datei booti386.0 vom neuen TFTP-Server
 chain tftp://${tftp-server}/booti386.0
+
+:end
