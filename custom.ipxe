@@ -29,7 +29,7 @@ imgfetch --name files.cgz http://pxe/programs/pmagic-ipxe/files.cgz
 echo Download summary:
 imgstat && sleep 3
 echo Booting Parted Magic...
-imgexec bzImage || goto main
+imgexec bzImage
 
 :pmagicnet
 echo Downloading Parted Magic image files from http://pxe/programs/pmagic...
