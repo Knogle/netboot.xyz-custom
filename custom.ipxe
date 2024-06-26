@@ -6,7 +6,7 @@
 set esc:hex 1b
 set cls ${esc:string}[2J
 set keybase-ipxe-path https://rscholar.keybase.pub/ipxe
-pmagic_path="http://pxe/programs/pmagic"
+set pmagic_path="http://pxe/programs/pmagic"
 set grml-path ${keybase-ipxe-path}/grml64-full
 set czilla-path ${keybase-ipxe-path}/clonezilla
 cpair --foreground 2 --background 0 0
