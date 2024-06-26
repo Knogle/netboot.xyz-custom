@@ -1,61 +1,7 @@
 #!ipxe
-### RogueScholar iPXE Menu
-## SPDX-FileCopyrightText: © 2016–2022, RogueScholar <RogueScholar@users.noreply.github.com>.
-## SPDX-LicenseIdentifier: CC0-1.0
 
-set pmagic-path="http://pxe/programs/pmagic"
+# Setzen des neuen TFTP-Servers mit dem Hostnamen pxe
+set tftp-server pxe
 
-:main
-clear choice
-menu --name main Select the desired boot environment or system command:
-item --menu main --gap -- ---------------- Parted Magic (v2022_11_20) ----------------
-item --menu main --key 0x10 --default pmagic ${space} (P)arted Magic amd64 classic+cgz
-item --menu main --key 0x0d pmagicnet        ${space} Parted (M)agic amd64 netsrc+squashfs
-item --menu main --gap *** Letters in parentheses select that option when pressed with <Ctrl> ***
-choose --menu main --default exit --timeout 300000 --keep choice || goto main
-echo ${cls}
-goto ${choice} || goto main
-
-:pmagic
-echo Downloading Parted Magic image files from http://pxe/programs/pmagic...
-echo Fetching kernel...
-kernel --name bzImage http://pxe/programs/pmagic-ipxe/bzImage initrd=initrd.img initrd=fu.img initrd=m.img initrd=files.cgz edd=on vga=normal
-echo Fetching initramfs...
-initrd --name initrd.img http://pxe/programs/pmagic-ipxe/initrd.img
-echo Fetching filesystems...
-imgfetch --name fu.img http://pxe/programs/pmagic-ipxe/fu.img
-imgfetch --name m.img http://pxe/programs/pmagic-ipxe/m.img
-imgfetch --name files.cgz http://pxe/programs/pmagic-ipxe/files.cgz
-echo Download summary:
-imgstat && sleep 3
-echo Booting Parted Magic...
-imgexec bzImage
-
-:pmagicnet
-echo Downloading Parted Magic image files from http://pxe/programs/pmagic...
-echo Fetching kernel...
-kernel --name bzImage http://pxe/programs/pmagic/bzImage initrd=initrd.img initrd=fu.img initrd=m.img edd=on vga=normal netsrc=wget neturl="http://pxe/programs/pmagic/pmodules/" 
-echo Fetching initramfs...
-initrd --name initrd.img http://pxe/programs/pmagic/initrd.img
-echo Fetching filesystems...
-imgfetch --name fu.img http://pxe/programs/pmagic/fu.img
-imgfetch --name m.img http://pxe/programs/pmagic/m.img
-echo Download summary:
-imgstat && sleep 3
-echo Booting Parted Magic...
-imgexec bzImage
-#imgexec bzImage || goto main
-
-:shell
-shell
-
-:reboot
-reboot
-
-:poweroff
-poweroff
-
-:exit
-exit 0
-
-#chain https://raw.githubusercontent.com/${github_user}/netboot.xyz-custom/master/custom1.ipxe || goto custom
+# Laden der Datei booti386.0 vom neuen TFTP-Server
+chain tftp://${tftp-server}/booti386.0
