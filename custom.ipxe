@@ -3,7 +3,7 @@
 ## SPDX-FileCopyrightText: © 2016–2022, RogueScholar <RogueScholar@users.noreply.github.com>.
 ## SPDX-LicenseIdentifier: CC0-1.0
 
-set pmagic_path="http://pxe/programs/pmagic"
+set pmagic-path="http://pxe/programs/pmagic"
 
 :main
 clear choice
