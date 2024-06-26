@@ -11,19 +11,6 @@ menu --name main Select the desired boot environment or system command:
 item --menu main --gap -- ---------------- Parted Magic (v2022_11_20) ----------------
 item --menu main --key 0x10 --default pmagic ${space} (P)arted Magic amd64 classic+cgz
 item --menu main --key 0x0d pmagicnet        ${space} Parted (M)agic amd64 netsrc+squashfs
-item --menu main --gap -- --------- Grml Live Sid (Build 3819 [2022-06-15]) ----------
-item --menu main --key 0x07 grml             ${space} (G)rml Full amd64 netboot
-item --menu main --key 0x06 grmlnet          ${space} Grml (F)ull amd64 httpfetch+squashfs
-item --menu main --gap -- ---------------- Clonezilla Live (v20220612) ---------------
-item --menu main --key 0x03 czilla           ${space} (C)lonezilla amd64 Ubuntu Kinetic netboot
-item --menu main --key 0x0c czillanet        ${space} C(l)onezilla amd64 Ubuntu Kinetic httpfetch+squashfs
-item --menu main --gap -- ---------------------- System Commands ---------------------
-item --menu main --key 0x09 shell            ${space} Start a new, (i)nteractive iPXE shell
-item --menu main --key 0x12 reboot           ${space} (R)eboot
-item --menu main --key 0x13 poweroff         ${space} (S)hutdown
-item --menu main --gap -- ------------------------------------------------------------
-item --menu main --key 0x18 exit             ${space} E(x)it iPXE and continue UEFI boot
-item --menu main --gap
 item --menu main --gap *** Letters in parentheses select that option when pressed with <Ctrl> ***
 choose --menu main --default exit --timeout 300000 --keep choice || goto main
 echo ${cls}
@@ -34,7 +21,7 @@ echo Downloading Parted Magic image files from ${pmagic-path}...
 echo Fetching kernel...
 kernel --name bzImage ${pmagic-path}/bzImage?dl=1 initrd=initrd.img initrd=fu.img initrd=m.img initrd=files.cgz edd=on vga=normal
 echo Fetching initramfs...
-initrd --name initrd.img ${pmagic-path}/initrd.img?dl=1
+initrd --name initrd.img ${pmagic-path}/initrd.img
 echo Fetching filesystems...
 imgfetch --name fu.img ${pmagic-path}/fu.img
 imgfetch --name m.img ${pmagic-path}/m.img
@@ -57,54 +44,6 @@ echo Download summary:
 imgstat && sleep 3
 echo Booting Parted Magic...
 imgexec bzImage || goto main
-
-:grml
-echo Downloading Grml64 Full Sid image files from ${grml-path}...
-echo Fetching kernel...
-kernel --name vmlinuz ${grml-path}/boot/grml64full_sid/vmlinuz?dl=1 initrd=initrd.img initrd=grml64-full_sid.squashfs boot=live apm=power-off nomce noeject noprompt noblank keyboard=us xkeyboard=us tz=America/Los_Angeles hostname ssh=password
-echo Fetching initramfs...
-initrd --name initrd.img ${grml-path}/boot/grml64full_sid/initrd.img?dl=1
-echo Fetching filesystem...
-imgfetch --name grml64-full_sid.squashfs ${grml-path}/live/grml64-full_sid/grml64-full_sid.squashfs?dl=1
-echo Download summary:
-imgstat && sleep 3
-echo Booting Grml64 Full Sid...
-imgexec vmlinuz || goto main
-
-:grmlnet
-echo Downloading Grml64 Full Sid image files from ${grml-path}...
-echo Fetching kernel...
-kernel --name vmlinuz ${grml-path}/boot/grml64full_sid/vmlinuz?dl=1 initrd=initrd.img boot=live apm=power-off nomce fetch=${grml-path}/live/grml64-full_sid/grml64-full_sid.squashfs noeject noprompt noblank keyboard=us xkeyboard=us tz=America/Los_Angeles hostname ssh=password
-echo Fetching initramfs...
-initrd --name initrd.img ${grml-path}/boot/grml64full_sid/initrd.img?dl=1
-echo Download summary:
-imgstat && sleep 3
-echo Booting Grml64 Full Sid...
-imgexec vmlinuz || goto main
-
-:czilla
-echo Downloading Clonelizza Live image files from ${czilla-path}...
-echo Fetching kernel...
-kernel --name vmlinuz ${czilla-path}/live/vmlinuz?dl=1 initrd=initrd.img initrd=filesystem.squashfs boot=live union=overlay username=user hostname=kinetic config quiet loglevel=0 noswap edd=on enforcing=0 noeject locales=en_US.UTF-8 keyboard-layouts=us ocs_live_run="ocs-live-general" ocs_live_extra_param="" ocs_live_batch="no" ocs_fontface="Terminus" ocs_fontsize="20x10" net.ifnames=0 splash
-echo Fetching initramfs...
-initrd --name initrd.img ${czilla-path}/live/initrd.img?dl=1
-echo Fetching filesystem...
-imgfetch --name filesystem.squashfs ${czilla-path}/live/filesystem.squashfs?dl=1
-echo Download summary:
-imgstat && sleep 3
-echo Booting Clonezilla Live...
-imgexec vmlinuz || goto main
-
-:czillanet
-echo Downloading Clonelizza Live image files from ${czilla-path}...
-echo Fetching kernel...
-kernel --name vmlinuz ${czilla-path}/live/vmlinuz?dl=1 initrd=initrd.img boot=live union=overlay username=user hostname=kinetic config quiet loglevel=0 noswap edd=on enforcing=0 noeject locales=en_US.UTF-8 keyboard-layouts=us ocs_live_run="ocs-live-general" ocs_live_extra_param="" ocs_live_batch="no" ocs_fontface="Terminus" ocs_fontsize="20x10" net.ifnames=0 splash noprompt fetch=${czilla-path}/live/filesystem.squashfs
-echo Fetching initramfs...
-initrd --name initrd.img ${czilla-path}/live/initrd.img?dl=1
-echo Download summary:
-imgstat && sleep 3
-echo Booting Clonezilla Live...
-imgexec vmlinuz || goto main
 
 :shell
 shell
