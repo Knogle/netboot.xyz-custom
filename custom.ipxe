@@ -43,7 +43,7 @@ imgfetch --name m.img http://pxe/programs/pmagic/m.img
 echo Download summary:
 imgstat && sleep 3
 echo Booting Parted Magic...
-boot
+imgexec bzImage
 #imgexec bzImage || goto main
 
 :shell
