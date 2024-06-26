@@ -17,29 +17,29 @@ echo ${cls}
 goto ${choice} || goto main
 
 :pmagic
-echo Downloading Parted Magic image files from ${pmagic-path}...
+echo Downloading Parted Magic image files from http://pxe/programs/pmagic...
 echo Fetching kernel...
-kernel --name bzImage ${pmagic-path}/bzImage?dl=1 initrd=initrd.img initrd=fu.img initrd=m.img initrd=files.cgz edd=on vga=normal
+kernel --name bzImage http://pxe/programs/pmagic-ipxe/bzImage initrd=initrd.img initrd=fu.img initrd=m.img initrd=files.cgz edd=on vga=normal
 echo Fetching initramfs...
-initrd --name initrd.img ${pmagic-path}/initrd.img
+initrd --name initrd.img http://pxe/programs/pmagic-ipxe/initrd.img
 echo Fetching filesystems...
-imgfetch --name fu.img ${pmagic-path}/fu.img
-imgfetch --name m.img ${pmagic-path}/m.img
-imgfetch --name files.cgz ${pmagic-path}/files.cgz
+imgfetch --name fu.img http://pxe/programs/pmagic-ipxe/fu.img
+imgfetch --name m.img http://pxe/programs/pmagic-ipxe/m.img
+imgfetch --name files.cgz http://pxe/programs/pmagic-ipxe/files.cgz
 echo Download summary:
 imgstat && sleep 3
 echo Booting Parted Magic...
 imgexec bzImage || goto main
 
 :pmagicnet
-echo Downloading Parted Magic image files from ${pmagic-path}...
+echo Downloading Parted Magic image files from http://pxe/programs/pmagic...
 echo Fetching kernel...
-kernel --name bzImage ${pmagic-path}/bzImage initrd=initrd.img initrd=fu.img initrd=m.img edd=on vga=normal netsrc=wget neturl="${pmagic-path}/pmodules/" 
+kernel --name bzImage http://pxe/programs/pmagic/bzImage initrd=initrd.img initrd=fu.img initrd=m.img edd=on vga=normal netsrc=wget neturl="http://pxe/programs/pmagic/pmodules/" 
 echo Fetching initramfs...
-initrd --name initrd.img ${pmagic-path}/initrd.img
+initrd --name initrd.img http://pxe/programs/pmagic/initrd.img
 echo Fetching filesystems...
-imgfetch --name fu.img ${pmagic-path}/fu.img
-imgfetch --name m.img ${pmagic-path}/m.img
+imgfetch --name fu.img http://pxe/programs/pmagic/fu.img
+imgfetch --name m.img http://pxe/programs/pmagic/m.img
 echo Download summary:
 imgstat && sleep 3
 echo Booting Parted Magic...
