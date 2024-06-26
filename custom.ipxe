@@ -3,19 +3,7 @@
 ## SPDX-FileCopyrightText: © 2016–2022, RogueScholar <RogueScholar@users.noreply.github.com>.
 ## SPDX-LicenseIdentifier: CC0-1.0
 
-set esc:hex 1b
-set cls ${esc:string}[2J
-set keybase-ipxe-path https://rscholar.keybase.pub/ipxe
 set pmagic_path="http://pxe/programs/pmagic"
-set grml-path ${keybase-ipxe-path}/grml64-full
-set czilla-path ${keybase-ipxe-path}/clonezilla
-cpair --foreground 2 --background 0 0
-console --left 40 --right 40 --top 80 --bottom 80 --depth 24 --picture ${keybase-ipxe-path}/background.png --keep
-
-dhcp && echo DHCP network interface configuration succeeded!
-echo Connection summary:
-ifstat ; route
-echo Greetings, wayfaring stranger.
 
 :main
 clear choice
