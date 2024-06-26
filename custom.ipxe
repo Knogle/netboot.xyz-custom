@@ -1,7 +1,7 @@
 #!ipxe
 
-# Überprüfen, ob das System im EFI-Modus gebootet wurde
-isefi && goto efi || goto bios
+# Überprüfen des Boot-Modus
+iseq ${platform} efi && goto efi || goto bios
 
 :efi
 echo Booting in EFI mode
